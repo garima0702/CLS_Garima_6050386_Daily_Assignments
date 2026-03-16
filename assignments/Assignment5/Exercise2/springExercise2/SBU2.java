@@ -1,6 +1,6 @@
-package cg.demo.springAssignment1and2.entities;
+package cg.demo.springExercise2;
 
-public class SBU {
+public class SBU2 {
 	private int sbuId;
 	private String sbuName;
 	private String sbuHead;

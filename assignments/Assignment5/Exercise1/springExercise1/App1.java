@@ -1,21 +1,22 @@
-package cg.demo.springAssignment1and2;
+package cg.demo.springExercise1;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import cg.demo.springAssignment1and2.entities.Employee;
+import cg.demo.springExercise1.Employee1;
 
 
-public class App 
+public class App1 
 {
 	public static void main( String[] args )
     {
         System.out.println( "Starting Application...." );
         
-        ApplicationContext ac =new ClassPathXmlApplicationContext("springConf.xml"); 
+        ApplicationContext ac =new ClassPathXmlApplicationContext("springConf1.xml"); 
+        Employee1 e= (Employee1) ac.getBean("e1");
         
-        Employee e1= (Employee) ac.getBean("emp1");
+     
 
-        System.out.println(e1);
+        System.out.println(e);
 
         System.out.println( "Closing Application...." );
     }

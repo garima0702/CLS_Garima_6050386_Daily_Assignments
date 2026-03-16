@@ -1,11 +1,13 @@
-package cg.demo.springAssignment1and2.entities;
+package cg.demo.springExercise1;
 
-public class Employee {
+
+
+public class Employee1 {
 	private int employeeId;
 	private String employeeName;
 	private double salary;
 	private int age;
-	private SBU businessUnit;
+	private String businessUnit;
 	
 	
 	
@@ -28,10 +30,12 @@ public class Employee {
 		this.salary = salary;
 	}
 	
-	public SBU getBusinessUnit() {
+	
+	
+	public String getBusinessUnit() {
 		return businessUnit;
 	}
-	public void setBusinessUnit(SBU businessUnit) {
+	public void setBusinessUnit(String businessUnit) {
 		this.businessUnit = businessUnit;
 	}
 	public int getAge() {
@@ -47,9 +51,4 @@ public class Employee {
 	}
 	
 	
-	
-	
-	
-	
-
 }
