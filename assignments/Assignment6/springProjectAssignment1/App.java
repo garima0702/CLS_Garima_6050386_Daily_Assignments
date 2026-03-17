@@ -35,25 +35,26 @@ public class App {
             switch(choice) {
 
             case 1:
-                Employee e = context.getBean(Employee.class);
 
                 System.out.print("Enter Employee ID: ");
-                e.setEmpid(sc.nextInt());
+                int id = sc.nextInt();
 
                 System.out.print("Enter Employee Name: ");
-                e.setEname(sc.next());
+                String name = sc.next();
 
                 System.out.print("Enter Salary: ");
-                e.setSalary(sc.nextDouble());
+                double salary = sc.nextDouble();
+
+                Employee e = new Employee(id, name, salary); 
 
                 service.addEmployee(e);
                 break;
 
             case 2:
                 System.out.print("Enter Employee ID to fetch: ");
-                int id = sc.nextInt();
+                int id2 = sc.nextInt();
 
-                Employee emp = service.fetchById(id);
+                Employee emp = service.fetchById(id2);
 
                 if(emp != null) {
                     System.out.println(emp.getEmpid() + " " + emp.getEname() + " " + emp.getSalary());
@@ -77,18 +78,30 @@ public class App {
                 break;
 
             case 4:
-                Employee upd = context.getBean(Employee.class);
 
                 System.out.print("Enter ID to update: ");
-                upd.setEmpid(sc.nextInt());
+                int id1 = sc.nextInt();
 
-                System.out.print("Enter New Name: ");
-                upd.setEname(sc.next());
+                Employee existing = service.fetchById(id1);
 
-                System.out.print("Enter New Salary: ");
-                upd.setSalary(sc.nextDouble());
+                if(existing != null) {
 
-                service.updateEmployee(upd);
+                    System.out.print("Enter New Name: ");
+                    String name1 = sc.next();
+
+                    System.out.print("Enter New Salary: ");
+                    double salary1 = sc.nextDouble();
+
+                    Employee upd = new Employee(id1, name1, salary1);
+
+                    service.updateEmployee(upd);
+
+                    System.out.println("Employee updated successfully!");
+
+                } else {
+                    System.out.println("Employee not found!");
+                }
+
                 break;
 
             case 5:

@@ -3,12 +3,18 @@ package cg.demo.springProjectAssignment1.beans;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
-@Scope("prototype")
+
 public class Employee {
 	private int empid;
 	private String ename;
 	private double salary;
+
+	public Employee(int empid, String ename, double salary) {
+		super();
+		this.empid = empid;
+		this.ename = ename;
+		this.salary = salary;
+	}
 	public int getEmpid() {
 		return empid;
 	}
