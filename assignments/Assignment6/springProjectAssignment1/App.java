@@ -39,15 +39,32 @@ public class App {
                 System.out.print("Enter Employee ID: ");
                 int id = sc.nextInt();
 
-                System.out.print("Enter Employee Name: ");
-                String name = sc.next();
+                Employee existing = service.fetchById(id);
 
-                System.out.print("Enter Salary: ");
-                double salary = sc.nextDouble();
+                if(existing != null) {
+                    System.out.println("Employee with ID " + id + " already exists!");
+                } 
+                else {
 
-                Employee e = new Employee(id, name, salary); 
+                    System.out.print("Enter Employee Name: ");
+                    String name = sc.next();
 
-                service.addEmployee(e);
+                    System.out.print("Enter Salary: ");
+                    double salary = sc.nextDouble();
+
+                    Employee e = new Employee(id, name, salary);
+
+                    if(service.addEmployee(e)) {
+                        System.out.println("Employee added successfully!");
+                        System.out.println("ID: " + e.getEmpid());
+                        System.out.println("Name: " + e.getEname());
+                        System.out.println("Salary: " + e.getSalary());
+                    } 
+                    else {
+                        System.out.println("Failed to add employee!");
+                    }
+                }
+
                 break;
 
             case 2:
@@ -82,9 +99,9 @@ public class App {
                 System.out.print("Enter ID to update: ");
                 int id1 = sc.nextInt();
 
-                Employee existing = service.fetchById(id1);
+                Employee existing1 = service.fetchById(id1);
 
-                if(existing != null) {
+                if(existing1 != null) {
 
                     System.out.print("Enter New Name: ");
                     String name1 = sc.next();
@@ -94,9 +111,9 @@ public class App {
 
                     Employee upd = new Employee(id1, name1, salary1);
 
-                    service.updateEmployee(upd);
+                    if(service.updateEmployee(upd)) {
 
-                    System.out.println("Employee updated successfully!");
+                    System.out.println("Employee updated successfully!");}
 
                 } else {
                     System.out.println("Employee not found!");
@@ -108,7 +125,12 @@ public class App {
                 System.out.print("Enter ID to delete: ");
                 int delId = sc.nextInt();
 
-                service.deleteEmployee(delId);
+                if(service.deleteEmployee(delId)) {
+                	System.out.println("Employee deleted successfully!");
+                }
+                else {
+                	 System.out.println("Employee not found!");
+                }
                 break;
 
             default:

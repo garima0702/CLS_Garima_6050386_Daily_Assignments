@@ -15,8 +15,8 @@ public class EmployeeServiceImpl implements IEmployeeService{
     private IEmployeeRepo repo;
 
     @Override
-    public void addEmployee(Employee e) {
-        repo.addEmployee(e);
+    public boolean addEmployee(Employee e) {
+        return repo.addEmployee(e);
     }
 
 	@Override
@@ -31,14 +31,14 @@ public class EmployeeServiceImpl implements IEmployeeService{
 	}
 
 	@Override
-	public void updateEmployee(Employee e) {
-		repo.updateEmployee(e);
+	public boolean updateEmployee(Employee e) {
+		return repo.updateEmployee(e);
 		
 	}
 
 	@Override
-	public void deleteEmployee(int id) {
-		repo.deleteEmployee(id);
+	public boolean deleteEmployee(int id) {
+		return repo.deleteEmployee(id);
 		
 	}
 

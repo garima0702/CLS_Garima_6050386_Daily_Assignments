@@ -15,25 +15,17 @@ public class EmployeeRepoImpl  implements IEmployeeRepo{
 
 	
 	@Override
-	public void addEmployee(Employee e) {
+
+	public boolean addEmployee(Employee e) {
 
 	    int id = e.getEmpid();
 
-	   
 	    if(emp.containsKey(id)) {
-	        System.out.println("Employee with ID " + id + " already exists!");
-	        return;
+	        return false; 
 	    }
 
-	   
 	    emp.put(id, e);
-
-	    System.out.println("Employee added successfully!");
-
-	    
-	    System.out.println("ID: " + e.getEmpid());
-	    System.out.println("Name: " + e.getEname());
-	    System.out.println("Salary: " + e.getSalary());
+	    return true;   
 	}
 
 
@@ -57,14 +49,16 @@ public class EmployeeRepoImpl  implements IEmployeeRepo{
 
 
 	@Override
-	public void updateEmployee(Employee e) {
+	public boolean updateEmployee(Employee e) {
 		 int id = e.getEmpid();
 
 		    if(emp.containsKey(id)) {
 		        emp.put(id, e);
-		        System.out.println("Employee updated successfully!");
+		        return true;
+		       
 		    } else {
-		        System.out.println("Employee not found!");
+		    	return false;
+		        
 		    }
 		
 	}
@@ -72,12 +66,13 @@ public class EmployeeRepoImpl  implements IEmployeeRepo{
 
 
 	@Override
-	public void deleteEmployee(int id) {
+	public boolean deleteEmployee(int id) {
 		  if(emp.containsKey(id)) {
 		        emp.remove(id);
-		        System.out.println("Employee deleted successfully!");
+		        return true;
+
 		    } else {
-		        System.out.println("Employee not found!");
+		    	return false;
 		    }
 		
 	}
