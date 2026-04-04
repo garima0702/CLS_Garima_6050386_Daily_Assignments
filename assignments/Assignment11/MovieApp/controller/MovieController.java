@@ -4,12 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.MovieApp.entities.Movies;
 import com.example.MovieApp.service.MovieServiceImpl;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class MovieController {
@@ -29,45 +33,86 @@ public class MovieController {
     // 📌 Show Movie Page (Add + List)
     @RequestMapping("/movies")
     public ModelAndView showMovies() throws Exception {
-        List<Movies> list = movieServiceImpl.searchAllMovies();
 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("movies", list);
-        mv.setViewName("movie");
+        mv.addObject("movies", movieServiceImpl.searchAllMovies());
 
+        mv.addObject("movie", new Movies());   // ✅ THIS LINE IS MISSING
+
+        mv.setViewName("movie");
         return mv;
     }
 
     // ➕ Add Movie
     @RequestMapping("/addMovie")
-    public ModelAndView addMovie(@RequestParam String name,
-                                @RequestParam double rating,
-                                @RequestParam String genre) throws Exception {
+    public ModelAndView addMovie(@Valid @ModelAttribute("movie") Movies movie,
+                                BindingResult result) throws Exception {
 
-        Movies m = new Movies(name, genre, rating);
-        movieServiceImpl.addMovie(m);
+        if (result.hasErrors()) {
+            ModelAndView mv = new ModelAndView("movie");
+            mv.addObject("movies", movieServiceImpl.searchAllMovies());
+            return mv;
+        }
 
+        movieServiceImpl.addMovie(movie);
         return new ModelAndView("redirect:/movies");
     }
 
-    // 🔍 Search by Genre
     @RequestMapping("/searchMovie")
-    public ModelAndView searchMovie(@RequestParam String genre) throws Exception {
+    public ModelAndView searchMovie(String genre) throws Exception {
 
-        List<Movies> list;
+        ModelAndView mv = new ModelAndView("movie");
 
         if (genre == null || genre.isEmpty()) {
-            list = movieServiceImpl.searchAllMovies();
+            mv.addObject("movies", movieServiceImpl.searchAllMovies());
         } else {
-            list = movieServiceImpl.searchByGenre(genre);
+            mv.addObject("movies", movieServiceImpl.searchByGenre(genre));
         }
 
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("movies", list);
-        mv.setViewName("movie");
+        mv.addObject("movie", new Movies());   // ✅ ADD THIS
 
         return mv;
     }
+    
+ 
+    
+    // ✏️ Edit Page Load
+    @RequestMapping("/editMovie")
+    public ModelAndView editMovie(@RequestParam String name) throws Exception {
+
+        Movies movie = movieServiceImpl.findByName(name);
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("movie", movie);
+        mv.addObject("isEdit", true);
+        mv.addObject("movies", movieServiceImpl.searchAllMovies());
+        mv.setViewName("movie");
+        
+
+        return mv;
+    }
+
+    // ✏️ Update
+    @RequestMapping("/updateMovie")
+    public ModelAndView updateMovie(@Valid @ModelAttribute("movie") Movies movie,
+                                   BindingResult result) throws Exception {
+
+        if (result.hasErrors()) {
+            ModelAndView mv = new ModelAndView("movie");
+            mv.addObject("movies", movieServiceImpl.searchAllMovies());
+            mv.addObject("isEdit", true);
+            return mv;
+        }
+        movieServiceImpl.updateMovie(movie.getMovieName(),
+                movie.getRating(),
+                movie.getGenre());
+
+return new ModelAndView("redirect:/movies");
+}
+    
+    
+    
+    
 
     // ❌ Delete Movie (using name for simplicity)
     @RequestMapping("/deleteMovie")

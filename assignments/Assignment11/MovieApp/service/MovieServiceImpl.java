@@ -45,22 +45,30 @@ public class MovieServiceImpl implements IMovieService {
 		return movieRepo.findByGenre(genre);
 	}
 
-	@Override
-	public void updateMovie(String name, double rating, String genre) throws Exception {
+	
+	
+	  // ✏️ Update
+    @Override
+    public void updateMovie(String name, double rating, String genre) throws Exception {
 
-		Movies movie = movieRepo.findBymovieName(name);
+        Movies movie = movieRepo.findBymovieName(name);
 
-		if (movie == null) {
-			throw new Exception("Movie not found");
-		}
+        if (movie == null) {
+            throw new Exception("Movie not found");
+        }
 
-		movie.setRating(rating);
-		movie.setGenre(genre);
+        movie.setRating(rating);
+        movie.setGenre(genre);
 
-		movieRepo.save(movie);
+        movieRepo.save(movie);
+    }
 
-		System.out.println("Movie updated successfully");
-	}
-
+    // 🔎 Find for Edit
+    @Override
+    public Movies findByName(String name) {
+        return movieRepo.findBymovieName(name);
+    }
 }
+
+
 

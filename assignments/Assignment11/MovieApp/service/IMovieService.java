@@ -11,4 +11,5 @@ public interface IMovieService {
 		public List<Movies> searchAllMovies() throws Exception;
 		public List<Movies> searchByGenre(String genre) throws Exception;
 		public void updateMovie(String name, double rating,String genre) throws Exception;
+		Movies findByName(String name); 
 }

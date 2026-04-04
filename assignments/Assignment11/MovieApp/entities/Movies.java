@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Movies {
@@ -15,10 +17,13 @@ public class Movies {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int movieId;
 	
+	@NotEmpty
 	private String movieName;
 	
+	@NotEmpty
 	private String genre;
 	
+	@Min(0)
 	private double rating;
 	
 	
